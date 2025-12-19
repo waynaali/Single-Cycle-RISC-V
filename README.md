@@ -1,83 +1,84 @@
-🧩 **Module Overview**  
-The processor is implemented in a modular and hierarchical manner. Each SystemVerilog file corresponds to a well-defined functional block in the single-cycle datapath, improving readability, testability, and future extensibility.
+🧩 Module Overview
 
-### Core Datapath Modules
-- **riscv_single.sv**  
-  Top-level module that instantiates and connects all datapath and control components.
+The processor is implemented in a modular and hierarchical manner. Each SystemVerilog file corresponds to a well-defined functional block in the single-cycle RISC-V datapath, improving readability, testability, and future extensibility.
 
-- **pc.sv**  
-  Program Counter register. Holds the current instruction address and updates every clock cycle.
+🔹 Core Datapath Modules
 
-- **adder.sv**  
-  Used for PC increment (`PC + 4`) and branch target address calculation.
+riscv_single.sv
+Top-level module that instantiates and interconnects all datapath and control components.
 
-- **instr_mem.sv**  
-  Instruction memory module. Fetches instructions using the PC address.
+pc.sv
+Program Counter register that holds the current instruction address and updates every clock cycle.
 
-- **register_file.sv**  
-  Implements 32 general-purpose registers (x0–x31). Supports two read ports and one write port.
+adder.sv
+Used for PC increment (PC + 4) and branch target address calculation.
 
-- **data_mem.sv**  
-  Data memory module used by `lw` and `sw` instructions.
+instr_mem.sv
+Instruction memory module that fetches instructions using the PC address.
 
----
+register_file.sv
+Implements 32 general-purpose registers (x0–x31) with two read ports and one write port.
 
-### Control Path Modules
-- **control_unit.sv**  
-  Generates high-level control signals based on the instruction opcode.
+data_mem.sv
+Data memory module used by load (lw) and store (sw) instructions.
 
-- **main_decoder.sv**  
-  Decodes instruction opcodes and determines datapath behavior.
+🔹 Control Path Modules
 
-- **Alu_decoder.sv**  
-  Decodes function fields (`funct3`, `funct7`) to select the ALU operation.
+control_unit.sv
+Generates high-level control signals based on the instruction opcode.
 
----
+main_decoder.sv
+Decodes instruction opcodes and determines overall datapath behavior.
 
-### Execution & Utility Modules
-- **ALU.sv**  
-  Performs arithmetic and logical operations such as add, sub, and, or, xor, and set-less-than.
+Alu_decoder.sv
+Decodes funct3 and funct7 fields to select the appropriate ALU operation.
 
-- **ALUResult.sv**  
-  Stores and forwards the ALU output to later stages of the datapath.
+🔹 Execution & Utility Modules
 
-- **ExtendUnit.sv**  
-  Generates sign-extended immediates for I, S, B, and J instruction formats.
+ALU.sv
+Performs arithmetic and logical operations such as add, sub, and, or, xor, and set-less-than.
 
-- **mux2to1.sv**  
-  2-to-1 multiplexer used throughout the datapath for control-based selection.
+ALUResult.sv
+Holds and forwards the ALU output to later stages of the datapath.
 
-- **result_mux.sv (mux_3to1)**  
-  Selects the final write-back data (ALU result, memory data, or PC+4).
+ExtendUnit.sv
+Generates sign-extended immediates for I, S, B, and J instruction formats.
 
----
+mux2to1.sv
+2-to-1 multiplexer used throughout the datapath for control-based signal selection.
 
-### Verification Files
-- **testbench.sv**  
-  SystemVerilog testbench used to verify functional correctness.
+result_mux.sv (mux_3to1)
+Selects the final write-back data (ALU result, memory output, or PC + 4).
 
-- **tb_riscv_single_behav.wcfg**  
-  Waveform configuration file for simulation visualization.
+🔹 Verification Files
 
-- **inst.mem**  
-  Memory initialization file containing test instructions.
+testbench.sv
+SystemVerilog testbench used to verify functional correctness of the processor.
 
----
+tb_riscv_single_behav.wcfg
+Waveform configuration file for simulation visualization.
 
-### Documentation & Results
-- **rsc.jfif**  
-  Single-cycle RISC-V architecture block diagram.
+inst.mem
+Memory initialization file containing test instructions.
 
-- **verified.png / verified3.png**  
-  Screenshots showing correct control signal behavior.
+📊 Documentation & Results
 
-- **mysinglecycle.jfif**  
-  Simulation waveform demonstrating instruction execution.
+rsc.jfif – Single-cycle RISC-V architecture block diagram
 
-▶️ **How to Run Simulation**
-1. Open the project in ModelSim / QuestaSim
-2. Compile all `.sv` files
-3. Set `testbench.sv` as the top module
-4. Run the simulation
-5. Load `tb_riscv_single_behav.wcfg` to view waveforms
-If you find this project useful, feel free to star the repository or share it with others who are learning RISC-V.
+verified.png, verified3.png – Control signal verification screenshots
+
+mysinglecycle.jfif – Simulation waveform showing instruction execution
+
+▶️ How to Run Simulation
+
+Open the project in ModelSim / QuestaSim
+
+Compile all .sv files
+
+Set testbench.sv as the top module
+
+Run the simulation
+
+Load tb_riscv_single_behav.wcfg to view waveforms
+
+⭐ If you find this project useful, feel free to star the repository or share it with others who are learning RISC-V.
