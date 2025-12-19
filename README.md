@@ -1,70 +1,122 @@
-# Single-Cycle-RISC-V
-This repository presents the RTL design and verification of a 32-bit single-cycle RISC-V processor implemented in SystemVerilog. The processor follows the RV32I instruction set and executes each instruction in one clock cycle, integrating core components, program counter, instruction memory, register file, ALU, control unit, and data memory.
+# Single-Cycle RISC-V Processor (RV32I)
 
-## 📌 Supported Instructions
+## 📌 Overview
 
-* R-type: `add, sub, and, or, xor, slt`
-* I-type: `addi, andi, ori, lw`
-* S-type: `sw`
-* B-type: `beq, bne`
-* J-type: `jal`
-## 🧱 Processor Architecture
+This project implements a **32-bit Single-Cycle RISC-V processor** using **SystemVerilog**, based on the **RV32I base integer instruction set**. Each instruction completes execution in **one clock cycle**, making this design ideal for learning and understanding **CPU datapath and control logic**.
 
-* 32-bit Single-Cycle RISC-V (RV32I)
-* One instruction executed per clock cycle
-* Modular RTL design:
+The processor is built at the **RTL level** and includes all essential components of a basic RISC-V CPU, along with a testbench for functional verification.
 
-  * Program Counter (PC)
-  * Instruction Memory
-  * Register File
-  * ALU & ALU Control
-  * Main Control Unit
-  * Data Memory
-  * Immediate Generator
-  * Branch & Jump Logic
-## 🧪 Verification Strategy
-* Instruction-level verification using SystemVerilog testbenches
-* Validation of:
-  * PC update logic
-  * Register write-back
-  * ALU operations
-  * Load/store memory access
-* Simulation waveform analysis using **GTKWave / Vivado**
+---
 
-## 🛠 Tools & Technologies
+## 🧠 Architecture Summary
 
-* **SystemVerilog**
-* RTL Simulation (Vivado / ModelSim)
-* GTKWave
-* RISC-V ISA (RV32I)
-## 📂 Project Structure
-Single-Cycle-RISC-V/
-├── rtl/
-│   ├── pc.sv
-│   ├── alu.sv
-│   ├── regfile.sv
-│   ├── control_unit.sv
-│   └── top.sv
-├── tb/
-│   └── processor_tb.sv
-├── programs/
-│   └── test_program.hex
-└── README.md
+The processor follows the classical **single-cycle datapath**, where instruction fetch, decode, execute, memory access, and write-back occur within one clock cycle.
+
+### 🔧 Major Components
+
+* **Program Counter (PC)** – Holds the address of the current instruction
+* **Instruction Memory** – Stores RISC-V instructions
+* **Register File** – 32 general-purpose registers (x0–x31)
+* **Immediate Generator** – Generates immediate values for I, S, B, J formats
+* **Control Unit** – Generates control signals based on opcode
+* **ALU Control Unit** – Decodes ALU operations
+* **Arithmetic Logic Unit (ALU)** – Executes arithmetic and logical operations
+* **Data Memory** – Used for load and store instructions
+* **Multiplexers** – Control data flow in the datapath
+
+---
+
+## 📜 Supported Instructions (RV32I Subset)
+
+### ✅ R-Type
+
+* `add`, `sub`, `and`, `or`, `xor`, `slt`
+
+### ✅ I-Type
+
+* `addi`, `andi`, `ori`, `lw`
+
+### ✅ S-Type
+
+* `sw`
+
+### ✅ B-Type
+
+* `beq`, `bne`
+
+### ✅ J-Type
+
+* `jal`
+
+> ⚠️ This is a **learning-focused subset** of RV32I. Instructions like `lui`, `auipc`, and shift operations can be added as future enhancements.
+
+---
+
+## 🧪 Verification
+
+* A **SystemVerilog testbench** is included to verify processor functionality.
+* Instructions are executed and validated through simulation.
+
+### Suggested Simulation Tools
+
+* ModelSim / QuestaSim
+* Vivado Simulator
+* Icarus Verilog (basic support)
+
+---
+
+## ▶️ How to Run (Example: ModelSim)
+
+```bash
+vlog *.sv
+vsim work.testbench
+run -all
 ```
-## 🚀 How to Run
 
-1. Compile RTL and testbench
-2. Load RISC-V program into instruction memory
-3. Run simulation
-4. Observe waveforms for verification
+---
 
-## 🔮 Future Work
+## 📁 Repository Structure
 
-* 5-stage pipelined RISC-V processor
-* Data hazard detection & forwarding
-* Control hazard handling
-* Performance comparison with single-cycle design
+```
+Single-Cycle-RISC-V/
+│── alu.sv
+│── control_unit.sv
+│── datapath.sv
+│── reg_file.sv
+│── instruction_memory.sv
+│── data_memory.sv
+│── testbench.sv
+│── README.md
+```
 
-### 🔑 Why this matters 
+---
 
-This project demonstrates **strong fundamentals in computer architecture, RTL design, and verification**, and is intended as a stepping stone toward advanced RISC-V and VLSI design work.
+## 🚀 Future Improvements
+
+* Add remaining RV32I instructions (`lui`, `auipc`, shifts)
+* Implement **pipeline architecture** (5-stage RISC-V)
+* Add **hazard detection and forwarding**
+* FPGA synthesis and implementation
+* Automated test suite and instruction-level verification
+
+---
+
+## 🎯 Learning Outcomes
+
+This project demonstrates understanding of:
+
+* RISC-V instruction formats
+* CPU datapath and control logic
+* RTL design using SystemVerilog
+* Simulation and verification techniques
+
+---
+
+## 👤 Author
+
+**Wayna Ali**
+GitHub: [https://github.com/waynaali](https://github.com/waynaali)
+
+---
+
+⭐ If you find this project helpful, feel free to star the repository!
