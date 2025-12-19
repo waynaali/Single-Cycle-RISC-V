@@ -36,7 +36,7 @@ Decodes funct3 and funct7 fields to select the appropriate ALU operation.
 🔹 Execution & Utility Modules
 
 ALU.sv
-Performs arithmetic and logical operations such as add, sub, and, or, xor, and set-less-than.
+Performs arithmetic and logical operations such as add, sub, and, or, xor, slt.
 
 ALUResult.sv
 Holds and forwards the ALU output to later stages of the datapath.
@@ -61,19 +61,13 @@ Waveform configuration file for simulation visualization.
 inst.mem
 Memory initialization file containing test instructions.
 
-### 📊 Documentation & Results
-
-**Single-Cycle RISC-V Architecture Block Diagram**  
-<img src="rsc.jfif" width="650">
-
-**Control Signal Verification**  
-<img src="verified.png" width="700">
-<img src="verified3.png" width="700">
-
-**Simulation Waveform**  
-<img src="mysinglecycle.jfif" width="750">
-
-
+📊 Documentation & Results
+🧠 Single-Cycle RISC-V Architecture Block Diagram
+<img src="rsc.jfif" width="700">
+✅ Control Signal Verification
+<img src="verified.png" width="750"> <img src="verified3.png" width="750">
+📈 Simulation Waveform
+<img src="mysinglecycle.jfif" width="800">
 ▶️ How to Run Simulation
 
 Open the project in ModelSim / QuestaSim
