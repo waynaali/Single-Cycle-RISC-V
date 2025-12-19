@@ -80,3 +80,4 @@ The processor is implemented in a modular and hierarchical manner. Each SystemVe
 3. Set `testbench.sv` as the top module
 4. Run the simulation
 5. Load `tb_riscv_single_behav.wcfg` to view waveforms
+If you find this project useful, feel free to star the repository or share it with others who are learning RISC-V.
