@@ -61,13 +61,18 @@ Waveform configuration file for simulation visualization.
 inst.mem
 Memory initialization file containing test instructions.
 
-📊 Documentation & Results
+### 📊 Documentation & Results
 
-rsc.jfif – Single-cycle RISC-V architecture block diagram
+**Single-Cycle RISC-V Architecture Block Diagram**  
+<img src="rsc.jfif" width="650">
 
-verified.png, verified3.png – Control signal verification screenshots
+**Control Signal Verification**  
+<img src="verified.png" width="700">
+<img src="verified3.png" width="700">
 
-mysinglecycle.jfif – Simulation waveform showing instruction execution
+**Simulation Waveform**  
+<img src="mysinglecycle.jfif" width="750">
+
 
 ▶️ How to Run Simulation
 
