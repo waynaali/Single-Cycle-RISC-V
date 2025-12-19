@@ -1,52 +1,82 @@
-## Single-Cycle RISC-V Processor (RV32I)
+🧩 **Module Overview**  
+The processor is implemented in a modular and hierarchical manner. Each SystemVerilog file corresponds to a well-defined functional block in the single-cycle datapath, improving readability, testability, and future extensibility.
 
-📌 **Overview**  
-This project implements a 32-bit Single-Cycle RISC-V processor using SystemVerilog (RV32I subset). Each instruction executes in a single clock cycle.
+### Core Datapath Modules
+- **riscv_single.sv**  
+  Top-level module that instantiates and connects all datapath and control components.
 
----
+- **pc.sv**  
+  Program Counter register. Holds the current instruction address and updates every clock cycle.
 
-🧠 **Architecture Summary**  
-The processor follows the classical single-cycle datapath (IF → ID → EX → MEM → WB).
+- **adder.sv**  
+  Used for PC increment (`PC + 4`) and branch target address calculation.
 
-**Block Diagram:**  
-![Block Diagram](rsc.jfif)
+- **instr_mem.sv**  
+  Instruction memory module. Fetches instructions using the PC address.
 
----
+- **register_file.sv**  
+  Implements 32 general-purpose registers (x0–x31). Supports two read ports and one write port.
 
-🧪 **Verification**  
-
-**Control Signals Verified:**  
-This image shows correct assertion of control signals for different instructions.  
-![Control Signals Verified](verified.png)
-
-**Simulation Waveform:**  
-This waveform shows instruction execution, PC increment, register file updates, and ALU outputs over time.  
-![Simulation Waveform](mysinglecycle.jfif)
+- **data_mem.sv**  
+  Data memory module used by `lw` and `sw` instructions.
 
 ---
 
-🔧 **Major Components**
-- Program Counter (PC)  
-- Instruction Memory  
-- Register File  
-- Immediate Generator  
-- Control Unit & ALU Control  
-- Arithmetic Logic Unit (ALU)  
-- Data Memory  
-- Multiplexers
+### Control Path Modules
+- **control_unit.sv**  
+  Generates high-level control signals based on the instruction opcode.
+
+- **main_decoder.sv**  
+  Decodes instruction opcodes and determines datapath behavior.
+
+- **Alu_decoder.sv**  
+  Decodes function fields (`funct3`, `funct7`) to select the ALU operation.
 
 ---
 
-📜 **Supported Instructions (RV32I Subset)**  
-- **R-Type:** add, sub, and, or, xor, slt  
-- **I-Type:** addi, andi, ori, lw  
-- **S-Type:** sw  
-- **B-Type:** beq, bne  
-- **J-Type:** jal  
+### Execution & Utility Modules
+- **ALU.sv**  
+  Performs arithmetic and logical operations such as add, sub, and, or, xor, and set-less-than.
 
-⚠️ Only a learning-focused subset.
+- **ALUResult.sv**  
+  Stores and forwards the ALU output to later stages of the datapath.
+
+- **ExtendUnit.sv**  
+  Generates sign-extended immediates for I, S, B, and J instruction formats.
+
+- **mux2to1.sv**  
+  2-to-1 multiplexer used throughout the datapath for control-based selection.
+
+- **result_mux.sv (mux_3to1)**  
+  Selects the final write-back data (ALU result, memory data, or PC+4).
 
 ---
 
-👤 **Author**  
-Wayna Ali – [GitHub](https://github.com/waynaali)
+### Verification Files
+- **testbench.sv**  
+  SystemVerilog testbench used to verify functional correctness.
+
+- **tb_riscv_single_behav.wcfg**  
+  Waveform configuration file for simulation visualization.
+
+- **inst.mem**  
+  Memory initialization file containing test instructions.
+
+---
+
+### Documentation & Results
+- **rsc.jfif**  
+  Single-cycle RISC-V architecture block diagram.
+
+- **verified.png / verified3.png**  
+  Screenshots showing correct control signal behavior.
+
+- **mysinglecycle.jfif**  
+  Simulation waveform demonstrating instruction execution.
+
+▶️ **How to Run Simulation**
+1. Open the project in ModelSim / QuestaSim
+2. Compile all `.sv` files
+3. Set `testbench.sv` as the top module
+4. Run the simulation
+5. Load `tb_riscv_single_behav.wcfg` to view waveforms
