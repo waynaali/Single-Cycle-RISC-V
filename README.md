@@ -1,4 +1,4 @@
-# Single-Cycle RISC-V Processor (RV32I)
+## Single-Cycle RISC-V Processor (RV32I)
 
 📌 **Overview**  
 This project implements a 32-bit Single-Cycle RISC-V processor using SystemVerilog (RV32I subset). Each instruction executes in a single clock cycle.
@@ -9,7 +9,7 @@ This project implements a 32-bit Single-Cycle RISC-V processor using SystemVeril
 The processor follows the classical single-cycle datapath (IF → ID → EX → MEM → WB).
 
 **Block Diagram:**  
-![Block Diagram](docs/rsc.png)
+![Block Diagram](rsc.jfif)
 
 ---
 
@@ -17,11 +17,11 @@ The processor follows the classical single-cycle datapath (IF → ID → EX → 
 
 **Control Signals Verified:**  
 This image shows correct assertion of control signals for different instructions.  
-![Control Signals Verified](docs/verified.png)
+![Control Signals Verified](verified.png)
 
 **Simulation Waveform:**  
 This waveform shows instruction execution, PC increment, register file updates, and ALU outputs over time.  
-![Simulation Waveform](docs/mysingle.jfif)
+![Simulation Waveform](mysinglecycle.jfif)
 
 ---
 
@@ -44,29 +44,7 @@ This waveform shows instruction execution, PC increment, register file updates, 
 - **B-Type:** beq, bne  
 - **J-Type:** jal  
 
-⚠️ Only a learning-focused subset. Other instructions like LUI, AUIPC, and shift operations can be added later.
-
----
-
-📁 **Repository Structure**
-Single-Cycle-RISC-V/
-│── src/ # All modules (ALU, register_file, etc.)
-│── tb/ # Testbenches
-│── inst/ # Instruction memory files
-│── docs/ # Images
-│ ├── rsc.png # Block diagram
-│ ├── mysingle.jfif # Waveform
-│ └── verified.png # Control signals
-│── README.md
-
----
-
-🚀 **Future Improvements**
-- Add remaining RV32I instructions  
-- Implement 5-stage pipeline  
-- Hazard detection & forwarding  
-- FPGA synthesis & implementation  
-- Automated test suite & instruction-level verification
+⚠️ Only a learning-focused subset.
 
 ---
 
