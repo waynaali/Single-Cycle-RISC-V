@@ -4,35 +4,66 @@
 // Engineer: 
 // 
 // Create Date: 11/07/2025 04:59:58 PM
-// Design Name: 
-// Module Name: ALUResult
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
+// Design Name: ALU
+// Module Name: ALU
+// Project Name: RISC-V Processor
+// Target Devices: FPGA / ASIC
+// Tool Versions: Vivado / ModelSim
 // Description: 
-// 
-// Dependencies: 
+//   32-bit Arithmetic Logic Unit (ALU)
+//   Performs arithmetic and logical operations based on ALUControl signal.
+//   Generates Zero flag used for branch decision logic.
+//
+// Dependencies: None
 // 
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//   Supported Operations:
+//   ALUControl = 000 → Addition
+//   ALUControl = 001 → Subtraction
+//   ALUControl = 010 → Bitwise AND
+//   ALUControl = 011 → Bitwise OR
+//   ALUControl = 101 → Logical Right Shift
+//
 //////////////////////////////////////////////////////////////////////////////////
 
+module ALU(
+    input  logic [31:0] SrcA,       // First operand (from register file)
+    input  logic [31:0] SrcB,       // Second operand (register/immediate)
+    input  logic [2:0]  ALUControl, // Control signal selecting ALU operation
+    output logic [31:0] ALUResult,  // Result of ALU operation
+    output logic        Zero        // Zero flag (1 if ALUResult == 0)
+);
 
-module ALU(input logic [31:0] SrcA, SrcB,
-input logic [2:0] ALUControl,
-output logic [31:0] ALUResult,
-output logic Zero);
-always_comb begin
-case (ALUControl)
-3'b000: ALUResult=SrcA+SrcB;
-3'b001: ALUResult=SrcA-SrcB;
-3'b101: ALUResult=SrcA>>SrcB;
-3'b011: ALUResult=SrcA|SrcB;
-3'b010: ALUResult=SrcA&SrcB;
-default: ALUResult= 32'b0;
-endcase
-Zero=(ALUResult==0)?1'b1:1'b0;
-end
+    // Combinational ALU logic
+    always_comb begin
+        case (ALUControl)
+
+            // Addition operation
+            3'b000: ALUResult = SrcA + SrcB;
+
+            // Subtraction operation
+            3'b001: ALUResult = SrcA - SrcB;
+
+            // Logical right shift
+            // Shift SrcA right by SrcB amount
+            3'b101: ALUResult = SrcA >> SrcB;
+
+            // Bitwise OR
+            3'b011: ALUResult = SrcA | SrcB;
+
+            // Bitwise AND
+            3'b010: ALUResult = SrcA & SrcB;
+
+            // Default case (safe output)
+            default: ALUResult = 32'b0;
+
+        endcase
+
+        // Zero flag generation
+        // Used in branch instructions (e.g., BEQ)
+        Zero = (ALUResult == 32'b0) ? 1'b1 : 1'b0;
+    end
+
 endmodule
