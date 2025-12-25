@@ -142,16 +142,16 @@ Single-Cycle-RISC-V/
 
 ### 🧠 Single-Cycle RISC-V Architecture Block Diagram
 
-<img src="rsc.jfif" width="700">
+<img src="https://raw.githubusercontent.com/waynaali/Single-Cycle-RISC-V/refs/heads/main/doc/block_diagram.jfif">
 
 ### ✅ Control Signal Verification
 
-<img src="verified.png" width="750">  
-<img src="verified3.png" width="750">
+<img src="https://raw.githubusercontent.com/waynaali/Single-Cycle-RISC-V/refs/heads/main/doc/verification.jfif">  
+<img src="https://raw.githubusercontent.com/waynaali/Single-Cycle-RISC-V/refs/heads/main/doc/verification%20(2).jfif">
 
 ### 📈 Simulation Waveform
 
-<img src="mysinglecycle.jfif" width="800">
+<img src="https://github.com/waynaali/Single-Cycle-RISC-V/blob/main/doc/waveform.jfif">
 
 ---
 
