@@ -3,7 +3,7 @@
 [![Language](https://img.shields.io/badge/Language-SystemVerilog-blue)](https://www.verilog.com/) 
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE) 
 [![Simulation](https://img.shields.io/badge/Simulation-Passed-brightgreen)](https://www.modeltech.com/) 
-[![Waveform](https://img.shields.io/badge/Waveform-Verified-blueviolet)](tb_riscv_single_behav.wcfg)
+[![Waveform](https://img.shields.io/badge/Waveform-Verified-blueviolet)](images/tb_riscv_single_behav.wcfg)
 
 A **modular single-cycle RISC-V processor** implemented in SystemVerilog, supporting **RV32I instructions**.  
 Ideal for **learning CPU architecture, simulation, and FPGA prototyping**.
@@ -45,25 +45,30 @@ This processor uses a **hierarchical, modular design**, where each SystemVerilog
 ```
 
 riscv_single_cycle/
+├── images/                       # All images and waveform files
+│   ├── rsc.jfif
+│   ├── verified.png
+│   ├── verified3.png
+│   └── mysinglecycle.jfif
+├── LICENSE                        # MIT License
 ├── README.md
-├── LICENSE
-├── inst.mem                     # Instruction memory initialization
-├── tb_riscv_single_behav.wcfg   # Waveform configuration
-├── testbench.sv                 # Top-level testbench
-├── riscv_single.sv              # Top-level CPU module
-├── pc.sv                        # Program Counter
-├── adder.sv                     # Adders for PC+4 and branch targets
-├── instr_mem.sv                 # Instruction memory module
-├── register_file.sv             # 32-register file
-├── data_mem.sv                  # Data memory module
-├── control_unit.sv              # Top-level control unit
-├── main_decoder.sv              # Main decoder for opcodes
-├── Alu_decoder.sv               # ALU operation decoder
-├── ALU.sv                       # Arithmetic Logic Unit
-├── ALUResult.sv                 # Holds ALU output
-├── ExtendUnit.sv                # Sign-extended immediate generator
-├── mux2to1.sv                   # 2-to-1 multiplexer
-├── result_mux.sv (mux3to1)     # 3-to-1 multiplexer for write-back
+├── inst.mem                        # Instruction memory initialization
+├── tb_riscv_single_behav.wcfg      # Waveform config
+├── testbench.sv                    # Testbench
+├── riscv_single.sv                 # Top-level CPU module
+├── pc.sv
+├── adder.sv
+├── instr_mem.sv
+├── register_file.sv
+├── data_mem.sv
+├── control_unit.sv
+├── main_decoder.sv
+├── Alu_decoder.sv
+├── ALU.sv
+├── ALUResult.sv
+├── ExtendUnit.sv
+├── mux2to1.sv
+├── result_mux.sv (mux3to1)
 
 ````
 
@@ -138,16 +143,16 @@ riscv_single_cycle/
 
 ### 🧠 Single-Cycle RISC-V Architecture Block Diagram
 
-<img src="rsc.jfif" width="700">
+<img src="images/rsc.jfif" width="700">
 
 ### ✅ Control Signal Verification
 
-<img src="verified.png" width="750">  
-<img src="verified3.png" width="750">
+<img src="images/verified.png" width="750">  
+<img src="images/verified3.png" width="750">
 
 ### 📈 Simulation Waveform
 
-<img src="mysinglecycle.jfif" width="800">
+<img src="images/mysinglecycle.jfif" width="800">
 
 ---
 
@@ -157,7 +162,7 @@ riscv_single_cycle/
 2. Compile all **`.sv`** files  
 3. Set **`testbench.sv`** as the top module  
 4. Run the simulation  
-5. Load **`tb_riscv_single_behav.wcfg`** to view waveforms  
+5. Load **`images/tb_riscv_single_behav.wcfg`** to view waveforms  
 
 **Optional:** Use VCD dump for waveform inspection:
 
@@ -178,4 +183,5 @@ end
 
 ⭐ *If this project is helpful, please consider starring the repo!*
 
-```
+
+
