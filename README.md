@@ -1,73 +1,136 @@
-## 🧩 Module Overview
+# Single-Cycle RISC-V Processor (RV32I) 🚀
 
-The processor is implemented in a **modular and hierarchical** manner. Each SystemVerilog file corresponds to a well-defined functional block in the **single-cycle RISC-V datapath**, improving readability, testability, and future extensibility.
+[![Language](https://img.shields.io/badge/Language-SystemVerilog-blue)](https://www.verilog.com/) 
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE) 
+[![Simulation](https://img.shields.io/badge/Simulation-Passed-brightgreen)](https://www.modeltech.com/) 
+[![Waveform](https://img.shields.io/badge/Waveform-Verified-blueviolet)](tb_riscv_single_behav.wcfg)
+
+A **modular single-cycle RISC-V processor** implemented in SystemVerilog, supporting **RV32I instructions**.  
+Ideal for **learning CPU architecture, simulation, and FPGA prototyping**.
+
+---
+
+## Table of Contents
+
+- [Project Overview](#-project-overview)
+- [Folder Structure](#-folder-structure)
+- [Core Datapath Modules](#-core-datapath-modules)
+- [Control Path Modules](#-control-path-modules)
+- [Execution & Utility Modules](#-execution--utility-modules)
+- [Verification Files](#-verification-files)
+- [Documentation & Results](#-documentation--results)
+- [Simulation Instructions](#-simulation-instructions)
+- [Contribution & Learning](#-contribution--learning)
+
+---
+
+## 🧩 Project Overview
+
+This processor uses a **hierarchical, modular design**, where each SystemVerilog file corresponds to a **functional block in the RISC-V datapath**, improving:
+
+- Readability  
+- Testability  
+- Extensibility  
+
+**Key Features:**
+- Supports **R-type, I-type, Load, Store, Branch, and JAL instructions**  
+- Executes **each instruction in a single clock cycle**  
+- Modular components for **datapath, control, and utilities**  
+- Compatible with **ModelSim / QuestaSim simulation**
+
+---
+
+## 🗂️ Folder Structure
+
+```
+
+riscv_single_cycle/
+├── README.md
+├── LICENSE
+├── inst.mem                     # Instruction memory initialization
+├── tb_riscv_single_behav.wcfg   # Waveform configuration
+├── testbench.sv                 # Top-level testbench
+├── riscv_single.sv              # Top-level CPU module
+├── pc.sv                        # Program Counter
+├── adder.sv                     # Adders for PC+4 and branch targets
+├── instr_mem.sv                 # Instruction memory module
+├── register_file.sv             # 32-register file
+├── data_mem.sv                  # Data memory module
+├── control_unit.sv              # Top-level control unit
+├── main_decoder.sv              # Main decoder for opcodes
+├── Alu_decoder.sv               # ALU operation decoder
+├── ALU.sv                       # Arithmetic Logic Unit
+├── ALUResult.sv                 # Holds ALU output
+├── ExtendUnit.sv                # Sign-extended immediate generator
+├── mux2to1.sv                   # 2-to-1 multiplexer
+├── result_mux.sv (mux3to1)     # 3-to-1 multiplexer for write-back
+
+````
 
 ---
 
 ## 🔹 Core Datapath Modules
 
-- **`riscv_single.sv`**  
-  Top-level module that instantiates and interconnects all datapath and control components.
+<details>
+<summary>Click to expand</summary>
 
-- **`pc.sv`**  
-  Program Counter register that holds the current instruction address and updates every clock cycle.
+| Module | Description |
+|--------|------------|
+| `riscv_single.sv` | Top-level module connecting all datapath and control modules. |
+| `pc.sv` | Program Counter register; updates instruction address every clock. |
+| `adder.sv` | Calculates `PC + 4` and branch/jump targets. |
+| `instr_mem.sv` | Instruction memory accessed by the PC. |
+| `register_file.sv` | 32 general-purpose registers (x0–x31) with 2 read ports and 1 write port. |
+| `data_mem.sv` | Data memory for `lw` and `sw` instructions. |
 
-- **`adder.sv`**  
-  Used for PC increment (**PC + 4**) and branch target address calculation.
-
-- **`instr_mem.sv`**  
-  Instruction memory module that fetches instructions using the PC address.
-
-- **`register_file.sv`**  
-  Implements **32 general-purpose registers (x0–x31)** with two read ports and one write port.
-
-- **`data_mem.sv`**  
-  Data memory module used by **load (`lw`)** and **store (`sw`)** instructions.
+</details>
 
 ---
 
 ## 🔹 Control Path Modules
 
-- **`control_unit.sv`**  
-  Generates high-level control signals based on the instruction opcode.
+<details>
+<summary>Click to expand</summary>
 
-- **`main_decoder.sv`**  
-  Decodes instruction opcodes and determines overall datapath behavior.
+| Module | Description |
+|--------|------------|
+| `control_unit.sv` | Generates high-level control signals from opcode. |
+| `main_decoder.sv` | Decodes opcode to determine datapath behavior. |
+| `Alu_decoder.sv` | Generates ALU operation based on `funct3` and `funct7`. |
 
-- **`Alu_decoder.sv`**  
-  Decodes **`funct3`** and **`funct7`** fields to select the appropriate ALU operation.
+</details>
 
 ---
 
 ## 🔹 Execution & Utility Modules
 
-- **`ALU.sv`**  
-  Performs arithmetic and logical operations such as **add, sub, and, or, xor, slt**.
+<details>
+<summary>Click to expand</summary>
 
-- **`ALUResult.sv`**  
-  Holds and forwards the ALU output to later stages of the datapath.
+| Module | Description |
+|--------|------------|
+| `ALU.sv` | Performs arithmetic/logical operations: add, sub, and, or, slt. |
+| `ALUResult.sv` | Holds ALU output for forwarding. |
+| `ExtendUnit.sv` | Sign-extends immediates for I, S, B, and J formats. |
+| `mux2to1.sv` | 2-to-1 multiplexer used in datapath. |
+| `result_mux.sv` (`mux3to1`) | Selects write-back data: ALU result, memory output, or PC + 4. |
 
-- **`ExtendUnit.sv`**  
-  Generates sign-extended immediates for **I, S, B, and J** instruction formats.
-
-- **`mux2to1.sv`**  
-  2-to-1 multiplexer used throughout the datapath.
-
-- **`result_mux.sv` (`mux_3to1`)**  
-  Selects the final write-back data (**ALU result, memory output, or PC + 4**).
+</details>
 
 ---
 
 ## 🔹 Verification Files
 
-- **`testbench.sv`**  
-  SystemVerilog testbench used for functional verification.
+<details>
+<summary>Click to expand</summary>
 
-- **`tb_riscv_single_behav.wcfg`**  
-  Waveform configuration file for simulation visualization.
+| File | Description |
+|------|------------|
+| `testbench.sv` | SystemVerilog testbench for functional verification. |
+| `tb_riscv_single_behav.wcfg` | Waveform configuration file for simulation. |
+| `inst.mem` | Memory initialization file with sample instructions. |
 
-- **`inst.mem`**  
-  Memory initialization file containing test instructions.
+</details>
 
 ---
 
@@ -77,15 +140,10 @@ The processor is implemented in a **modular and hierarchical** manner. Each Syst
 
 <img src="rsc.jfif" width="700">
 
----
-
 ### ✅ Control Signal Verification
 
-<img src="verified.png" width="750">
-
+<img src="verified.png" width="750">  
 <img src="verified3.png" width="750">
-
----
 
 ### 📈 Simulation Waveform
 
@@ -93,14 +151,31 @@ The processor is implemented in a **modular and hierarchical** manner. Each Syst
 
 ---
 
-## ▶️ How to Run Simulation
+## ▶️ Simulation Instructions
 
-1. Open the project in **ModelSim / QuestaSim**
-2. Compile all **`.sv`** files
-3. Set **`testbench.sv`** as the top module
-4. Run the simulation
-5. Load **`tb_riscv_single_behav.wcfg`** to view waveforms
+1. Open the project in **ModelSim / QuestaSim**  
+2. Compile all **`.sv`** files  
+3. Set **`testbench.sv`** as the top module  
+4. Run the simulation  
+5. Load **`tb_riscv_single_behav.wcfg`** to view waveforms  
+
+**Optional:** Use VCD dump for waveform inspection:
+
+```systemverilog
+initial begin
+    $dumpfile("tb_risc.vcd");
+    $dumpvars(0, tb_risc);
+end
+````
 
 ---
 
-⭐ *If you find this project useful, feel free to star the repository or share it with others who are learning RISC-V.*
+## 🌟 Contribution & Learning
+
+* Modular design allows **easy extension** to pipelined or multi-cycle RISC-V processors
+* Perfect for **educational purposes**, CPU design practice, and simulation
+* Feel free to **star this repository** or **share it with fellow learners**
+
+⭐ *If this project is helpful, please consider starring the repo!*
+
+```
